@@ -20,8 +20,13 @@ end
 
 JSON.parse(stories.body).select do |story|
   story["name"]
-  story["description"]
 end
 
+story_details = Faraday.new.get do |req|
+  req.url 'https://www.pivotaltracker.com/services/v5/projects/1029360/stories/66882732'
+  req.headers['X-TrackerToken'] = ENV['TOKEN']
+end
+
+JSON.parse(story_details.body)["description"]
 
 
